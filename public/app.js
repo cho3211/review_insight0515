@@ -53,26 +53,21 @@ async function analyzeSentiment() {
     analyzeBtn.style.opacity = "0.7";
 
     try {
-        // [추후 Step 3에서 실제 API로 교체될 부분]
-        // const response = await fetch('/api/analyze', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ text })
-        // });
-        // const data = await response.json();
+        // 실제 API 호출
+        const response = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+        });
+        
+        if (!response.ok) {
+            throw new Error("서버 응답 오류");
+        }
+        
+        const data = await response.json();
 
-        // 시뮬레이션을 위한 가상의 딜레이 (1.5초)
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        // 가상의 분석 데이터 (테스트용)
-        const mockData = {
-            sentiment: "긍정",
-            confidence: 95,
-            reasoning: "입력하신 문장에는 '즐겁다', '행복하다'와 같은 긍정적인 단어들이 포함되어 있어 전반적으로 매우 밝은 에너지가 느껴집니다."
-        };
-
-        // 3. 화면에 결과 업데이트
-        updateResultUI(mockData);
+        // 3. 화면에 결과 업데이트 (실제 데이터 적용)
+        updateResultUI(data);
         
         // 4. 결과 모달창 띄우기
         showModal();
