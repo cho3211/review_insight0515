@@ -41,12 +41,14 @@ const supabase = createClient(supabaseUrl, supabaseKey);
  * 데이터를 암호화합니다 (AES-256-CBC 방식)
  * 사용자의 개인정보(입력 텍스트)를 보호하기 위해 DB 저장 전 실행합니다.
  */
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'a_very_secret_key_32_chars_long!!'; // 32자 키
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'sentimental_ai_default_secret_key_32'; // 기본 키
 const IV_LENGTH = 16; // AES 블록 사이즈
+// 키 길이를 항상 32바이트(AES-256용)로 맞추기 위해 해시 처리합니다.
+const hashedKey = crypto.createHash('sha256').update(ENCRYPTION_KEY).digest();
 
 function encrypt(text) {
     let iv = crypto.randomBytes(IV_LENGTH);
-    let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv);
+    let cipher = crypto.createCipheriv('aes-256-cbc', hashedKey, iv);
     let encrypted = cipher.update(text);
     encrypted = Buffer.concat([encrypted, cipher.final()]);
     return iv.toString('hex') + ':' + encrypted.toString('hex');
