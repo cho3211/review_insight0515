@@ -1,0 +1,284 @@
+/* 
+    Sentimental AI Design System (Apple Aesthetic)
+    작성자: Antigravity
+    설명: Apple의 미니멀하고 고급스러운 디자인 시스템을 구현한 CSS 파일입니다.
+*/
+
+:root {
+    /* 디자인 토큰 설정 (Design Tokens) */
+    --color-primary: #0066cc;    /* Action Blue */
+    --color-canvas: #ffffff;     /* Pure White */
+    --color-parchment: #f5f5f7;  /* Parchment (배경색) */
+    --color-ink: #1d1d1f;        /* Near-Black (텍스트색) */
+    --color-gray: #86868b;       /* 보조 텍스트색 */
+    --color-divider: #d2d2d7;    /* 구분선색 */
+    
+    --border-radius-card: 18px;
+    --border-radius-pill: 9999px;
+    --border-radius-btn: 8px;
+
+    /* 폰트 설정: Inter를 기본으로 하되, 시스템 폰트를 우선합니다. */
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased; /* 폰트 렌더링을 부드럽게 합니다. */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    line-height: 1.47059;
+    letter-spacing: -0.022em; /* Apple 스타일의 좁은 자간 설정 */
+}
+
+/* --- Navigation --- */
+.global-nav {
+    height: 44px;
+    background-color: rgba(0, 0, 0, 0.8); /* 반투명한 검은색 바 */
+    backdrop-filter: saturate(180%) blur(20px); /* 블러 효과 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-content {
+    width: 100%;
+    max-width: 980px;
+    padding: 0 22px;
+}
+
+.logo {
+    color: #f5f5f7;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+/* --- Main Layout --- */
+.container {
+    padding-top: 44px; /* 내비게이션 바 높이만큼 여백 */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-parchment);
+}
+
+.hero-section {
+    width: 100%;
+    max-width: 800px;
+    padding: 80px 22px;
+    text-align: center;
+}
+
+.main-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    margin-bottom: 12px;
+    color: var(--color-ink);
+}
+
+.subtitle {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--color-gray);
+    margin-bottom: 48px;
+}
+
+/* --- Input Area --- */
+.input-card {
+    background: var(--color-canvas);
+    border-radius: var(--border-radius-card);
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    border: none;
+    resize: none;
+    font-family: inherit;
+    font-size: 19px;
+    color: var(--color-ink);
+    outline: none;
+    margin-bottom: 20px;
+}
+
+textarea::placeholder {
+    color: var(--color-divider);
+}
+
+.action-area {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- Buttons --- */
+.primary-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-pill);
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
+}
+
+.primary-btn:active {
+    transform: scale(0.95); /* 클릭 시 작아지는 애니메이션 */
+}
+
+/* --- Modal Styles --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: saturate(180%) blur(20px); /* Frosted Glass 효과 */
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--border-radius-card);
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalAppear {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: var(--color-gray);
+    cursor: pointer;
+}
+
+.sentiment-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: var(--border-radius-pill);
+    background: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.confidence-section {
+    margin-bottom: 24px;
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    color: var(--color-gray);
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--color-divider);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 1s ease-out;
+}
+
+.value {
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--color-divider);
+    margin: 24px 0;
+}
+
+.reasoning-section h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.reasoning-section p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-ink);
+}
+
+/* 모바일 대응 (Responsive) */
+@media (max-width: 600px) {
+    .main-title {
+        font-size: 40px;
+    }
+    .subtitle {
+        font-size: 19px;
+    }
+    .input-card {
+        padding: 20px;
+    }
+}
